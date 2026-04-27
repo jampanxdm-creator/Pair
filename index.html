@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"> <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JAMPAN-XMD | Global Dashboard</title>
@@ -9,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ================= BASE & ROOT ================= */
+    /* ... (Style zako zote kali nimeziacha vile vile) ... */
     :root {
       --bg: #05070a;
       --card-bg: rgba(17, 25, 40, 0.75);
@@ -36,7 +35,6 @@
       min-height: 100vh;
     }
 
-    /* ================= LOADER STYLES ================= */
     #loader {
       position: fixed; inset: 0;
       display: flex; flex-direction: column;
@@ -54,7 +52,6 @@
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ================= ONBOARDING STYLES ================= */
     #onboard {
       position: fixed; inset: 0;
       display: none;
@@ -92,7 +89,6 @@
       box-shadow: 0 0 20px var(--accent-glow); transition: 0.3s;
     }
 
-    /* ================= DASHBOARD MAIN STYLES ================= */
     #app {
       display: none;
       background-image: 
@@ -129,13 +125,11 @@
 
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-    /* Stats Grid */
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
     .stat-card { padding: 20px; text-align: center; }
     .stat-val { font-size: 1.8rem; font-weight: 700; display: block; }
     .stat-label { color: var(--text-dim); font-size: 0.8rem; text-transform: uppercase; }
 
-    /* Pairing Box */
     .pairing-box { padding: 35px; margin-bottom: 30px; text-align: center; }
     input {
       width: 100%; max-width: 450px; padding: 18px;
@@ -154,20 +148,17 @@
 
     .pairing-code { font-size: 2.5rem; font-weight: 800; letter-spacing: 5px; color: var(--accent); margin: 20px 0; }
 
-    /* Database Section */
     .users-section { padding: 25px; margin-bottom: 30px; }
     .user-list { display: grid; gap: 12px; max-height: 250px; overflow-y: auto; }
     .user-card { display: flex; align-items: center; padding: 12px 20px; background: rgba(255,255,255,0.03); border-radius: 14px; border: 1px solid var(--border); }
     .avatar { width: 40px; height: 40px; background: var(--secondary); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 15px; font-weight: bold; }
 
-    /* Contact Section */
     .contact-section { padding: 30px; text-align: center; background: linear-gradient(135deg, rgba(112, 0, 255, 0.1), rgba(0, 255, 163, 0.05)); border: 1px dashed var(--accent); border-radius: 24px; margin-bottom: 40px; }
     .linktree-btn { display: inline-flex; align-items: center; gap: 12px; padding: 15px 35px; background: #fff; color: #000; text-decoration: none; border-radius: 100px; font-weight: 800; margin-top: 15px; transition: 0.3s; }
     .linktree-btn:hover { background: var(--accent); transform: scale(1.05); }
 
     footer { text-align: center; color: var(--text-dim); font-size: 0.8rem; padding-bottom: 40px; }
 
-    /* Popup Channel */
     #popup {
       position: fixed; bottom: 20px; right: 20px;
       background: #111; border: 1px solid var(--accent);
@@ -189,23 +180,19 @@
       <h1>👋 Welcome</h1>
       <p>Your powerful WhatsApp AI Assistant (JAMPAN-XMD)</p>
     </div>
-
     <div class="slide" id="s2" style="display:none;">
       <h1>⚡ Easy Pairing</h1>
       <p>Generate your pairing code instantly and securely.</p>
     </div>
-
     <div class="slide" id="s3" style="display:none;">
       <h1>🔔 Get Updates</h1>
       <p>Join our channel to stay updated with new features.</p>
     </div>
-
     <div class="dots">
       <div class="dot active"></div>
       <div class="dot"></div>
       <div class="dot"></div>
     </div>
-
     <button onclick="nextSlide()" class="btn-next" id="nextBtn">Continue ➜</button>
   </div>
 
@@ -237,11 +224,9 @@
       <div class="glass pairing-box">
         <h3>WhatsApp Pairing</h3>
         <p style="color: var(--text-dim); margin-top: 5px;">Enter your number with country code to pair.</p>
-        
         <div class="input-group" style="margin-top: 20px;">
           <input type="number" id="number" placeholder="e.g. 25567.......">
         </div>
-        
         <button class="btn-primary" id="submit">
           <span>Generate Code</span>
           <i class="fa-solid fa-bolt"></i>
@@ -251,7 +236,6 @@
         <button class="btn-primary" id="copy-btn" style="display:none; background: var(--secondary); color: white;">
           <i class="fa-solid fa-copy"></i> Copy Pairing Code
         </button>
-        
         <p id="waiting-message" style="display:none; margin-top:15px; color: var(--accent);">
           <i class="fa-solid fa-circle-notch fa-spin"></i> Generating code, please wait...
         </p>
@@ -269,11 +253,8 @@
 
       <div class="contact-section">
         <h3 style="margin-bottom: 10px;">Contact Developer</h3>
-        <p style="color: var(--text-dim); font-size: 0.9rem;">Need help or custom features? Reach out anytime.</p>
-        
         <a href="https://jampan-web-tree.netlify.app/" target="_blank" class="linktree-btn">
-          <i class="fa-solid fa-tree"></i>
-          Connect via Linktree
+          <i class="fa-solid fa-tree"></i> Connect via Linktree
         </a>
       </div>
     </div>
@@ -285,7 +266,6 @@
 
   <div id="popup">
     <b style="color:var(--accent)">📢 Community Channel</b>
-    <p style="font-size:12px; color: #aaa; margin: 5px 0;">Join to receive the latest updates and bot tutorials.</p>
     <div style="display: flex; gap: 10px; margin-top: 10px;">
       <a href="https://whatsapp.com/channel/0029Vb8DGUCDDmFTDzBKDf2j" target="_blank" style="flex: 1;">
         <button class="popup-btn" style="background: var(--accent); color: #000; width: 100%;">Join Now</button>
@@ -295,31 +275,10 @@
   </div>
 
   <script>
-    /* ================= NOTIFICATION LOGIC (Once a day) ================= */
-    function setupNotifications() {
-      if (!("Notification" in window)) return;
+    /* ================= SYSTEM CONFIGURATION ================= */
+    const BACKEND_URL = "https://jampan-dacb27d4e190.herokuapp.com";
 
-      if (Notification.permission === "default") {
-        Notification.requestPermission();
-      }
-
-      // Check last notification time
-      const lastNotify = localStorage.getItem("last_notify_time");
-      const now = new Date().getTime();
-      const oneDay = 24 * 60 * 60 * 1000; // 24 Hours
-
-      if (!lastNotify || (now - lastNotify > oneDay)) {
-        if (Notification.permission === "granted") {
-          new Notification("JAMPAN-XMD Reminder 🤖", {
-            body: "Don't forget to pair your WhatsApp number to keep the bot active!",
-            icon: "https://files.catbox.moe/rdsuei.png"
-          });
-          localStorage.setItem("last_notify_time", now);
-        }
-      }
-    }
-
-    /* ================= SYSTEM TRANSITIONS ================= */
+    /* ================= UI TRANSITIONS ================= */
     setTimeout(() => {
       document.getElementById("loader").style.display = "none";
       document.getElementById("onboard").style.display = "block";
@@ -333,9 +292,7 @@
         document.getElementById("s" + step).style.display = "flex";
         updateDots();
         if(step === 3) document.getElementById("nextBtn").innerText = "Launch App ➜";
-      } else {
-        openApp();
-      }
+      } else { openApp(); }
     }
 
     function updateDots() {
@@ -348,21 +305,19 @@
     function openApp() {
       document.getElementById("onboard").style.display = "none";
       document.getElementById("app").style.display = "block";
-      
-      setupNotifications(); // Ask and send notification
       fetchUsers(); 
       startPopupLoop();
     }
 
-    /* ================= APP FUNCTIONS ================= */
     function startPopupLoop() {
       setInterval(() => {
         document.getElementById("popup").style.display = "block";
         setTimeout(() => closePopup(), 8000);
-      }, 45000);
+      }, 60000);
     }
     function closePopup() { document.getElementById("popup").style.display = "none"; }
 
+    /* ================= CORE LOGIC (FETCHING FROM HEROKU) ================= */
     const pairResult = document.getElementById("pair-result");
     const submitButton = document.getElementById("submit");
     const numberInput = document.getElementById("number");
@@ -373,14 +328,15 @@
 
     submitButton.addEventListener("click", async () => {
       const num = numberInput.value;
-      if(!num || num.length < 10) return alert("Please enter a valid number!");
+      if(!num || num.length < 10) return alert("Ingiza namba sahihi!");
       
       waitingMessage.style.display = "block";
       pairResult.innerHTML = "";
       copyBtn.style.display = "none";
 
       try {
-        const response = await fetch(`/code?number=${num}`);
+        // Imeunganishwa na Backend yako ya Heroku
+        const response = await fetch(`${BACKEND_URL}/code?number=${num}`);
         const data = await response.json();
         waitingMessage.style.display = "none";
         
@@ -388,28 +344,29 @@
           pairResult.innerHTML = `<div class="pairing-code" id="code-text">${data.code}</div>`;
           copyBtn.style.display = "inline-flex";
         } else {
-          pairResult.innerHTML = `<p style="color:var(--error)">Failed to generate code. Try again!</p>`;
+          pairResult.innerHTML = `<p style="color:var(--error)">Failed! Check your backend.</p>`;
         }
       } catch (err) {
         waitingMessage.style.display = "none";
-        pairResult.innerHTML = `<p style="color:var(--error)">Server Error!</p>`;
+        pairResult.innerHTML = `<p style="color:var(--error)">Backend Offline au CORS Error!</p>`;
       }
     });
 
     copyBtn.addEventListener("click", () => {
       const code = document.getElementById("code-text").innerText;
       navigator.clipboard.writeText(code);
-      alert("Code copied to clipboard!");
+      alert("Pairing Code imekopiwa!");
     });
 
     async function fetchUsers() {
       try {
-        const response = await fetch('/session/numbers.json');
+        const response = await fetch(`${BACKEND_URL}/session/numbers.json`);
+        if(!response.ok) throw new Error();
         const numbers = await response.json();
         userCountDisplay.innerText = numbers.length;
         usersList.innerHTML = numbers.map(n => `
           <div class="user-card">
-            <div class="avatar">${n.substring(0,2)}</div>
+            <div class="avatar">${n.toString().substring(0,2)}</div>
             <div>
               <p style="font-weight:bold">+${n}</p>
               <p style="font-size:0.7rem; color:var(--accent)">Active Session</p>
