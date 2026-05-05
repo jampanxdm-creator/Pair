@@ -1,4 +1,4 @@
-const API = "https://dashboard.heroku.com/apps/jampan-xdm"; // BADILISHA na link yako halisi
+const API = "https://jampan-xdm-bbeb3a9c6e1e.herokuapp.com/"; // BADILISHA na link yako halisi
 
 // Pair function
 async function pair() {
