@@ -1,21 +1,25 @@
-<!-- frontend/index.html -->
 <!DOCTYPE html>
-<html lang="sw">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JAMPAN XMD WhatsApp Bot</title>
+  <title>JAMPAN-XMD</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>JAMPAN XMD WhatsApp Bot</h1>
-    <p id="status">Status: Checking...</p>
-    <div id="pair-code-container" style="display: none;">
-      <h2>Use this Pair Code to Connect</h2>
-      <p id="pair-code"></p>
-    </div>
-  </div>
 
-  <script src="script.js"></script>
+<div class="container">
+  <h1>JAMPAN-XMD</h1>
+
+  <input id="number" placeholder="+255..." />
+  <button onclick="pair()">Pair Device</button>
+
+  <div id="otp"></div>
+  <div id="status">Status: loading...</div>
+
+  <a href="https://jampan-web-tree.netlify.app/" target="_blank">
+    Contact Owner
+  </a>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
