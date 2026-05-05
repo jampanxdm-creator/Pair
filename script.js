@@ -1,26 +1,27 @@
-// frontend/script.js
-window.onload = function() {
-  fetchPairingStatus();
+async function pair() {
+  const number = document.getElementById("number").value;
 
-  async function fetchPairingStatus() {
-    try {
-      const response = await fetch('https://your-heroku-url.herokuapp.com/status');
-      const data = await response.json();
+  const res = await fetch("http://localhost:3000/pair", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ number })
+  });
 
-      document.getElementById('status').innerText = `Status: ${data.status}`;
+  const data = await res.json();
 
-      if (data.status === 'Pairing required') {
-        const pairCodeResponse = await fetch('https://your-heroku-url.herokuapp.com/paircode');
-        const pairCodeData = await pairCodeResponse.json();
-        displayPairCode(pairCodeData.pairCode);
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+  if (data.code) {
+    document.getElementById("otp").innerText =
+      "OTP: " + data.code;
+  } else {
+    alert("Failed");
   }
+}
 
-  function displayPairCode(pairCode) {
-    document.getElementById('pair-code').innerText = pairCode;
-    document.getElementById('pair-code-container').style.display = 'block';
-  }
-};
+// STATUS LOOP
+setInterval(async () => {
+  const res = await fetch("http://localhost:3000/status");
+  const data = await res.json();
+
+  document.getElementById("status").innerText =
+    "Status: " + data.status;
+}, 2000);
