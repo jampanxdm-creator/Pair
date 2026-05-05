@@ -1,25 +1,137 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>JAMPAN-XMD</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JAMPAN XMD PAIRING</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .box {
+      width: 90%;
+      max-width: 500px;
+      background: rgba(255,255,255,0.05);
+      padding: 25px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    h1 {
+      background: linear-gradient(90deg, #00ffd5, #4f46e5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #00ffd5, #4f46e5);
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      transform: scale(1.03);
+    }
+
+    .result {
+      margin-top: 20px;
+      background: rgba(0,0,0,0.3);
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 14px;
+      text-align: left;
+      word-break: break-all;
+    }
+
+    .code {
+      font-size: 18px;
+      font-weight: bold;
+      color: #00ff88;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="container">
-  <h1>JAMPAN-XMD</h1>
+  <div class="box">
 
-  <input id="number" placeholder="+255..." />
-  <button onclick="pair()">Pair Device</button>
+    <h1>📲 JAMPAN XMD PAIR</h1>
+    <p>Enter number to generate pairing code</p>
 
-  <div id="otp"></div>
-  <div id="status">Status: loading...</div>
+    <input type="text" id="number" placeholder="e.g 255674229015">
 
-  <a href="https://jampan-web-tree.netlify.app/" target="_blank">
-    Contact Owner
-  </a>
-</div>
+    <button onclick="pair()">🔗 Generate Pair Code</button>
 
-<script src="script.js"></script>
+    <div class="result" id="result">
+      Waiting for input...
+    </div>
+
+  </div>
+
+  <script>
+    const BACKEND_URL = "https://jampan-xdm-bbeb3a9c6e1e.herokuapp.com";
+
+    async function pair() {
+      const number = document.getElementById("number").value;
+      const box = document.getElementById("result");
+
+      if (!number) {
+        box.innerHTML = "<span class='error'>Please enter a number</span>";
+        return;
+      }
+
+      box.innerHTML = "Generating pairing code... ⏳";
+
+      try {
+        const res = await fetch(`${BACKEND_URL}/pair?number=${number}`);
+        const data = await res.json();
+
+        if (data.code) {
+          box.innerHTML = `
+            <div>Number: ${number}</div>
+            <div class="code">Pair Code: ${data.code}</div>
+            <div>Status: Ready to link WhatsApp</div>
+          `;
+        } else {
+          box.innerHTML = "<span class='error'>Failed to generate code</span>";
+        }
+
+      } catch (err) {
+        box.innerHTML = "<span class='error'>Backend connection failed</span>";
+      }
+    }
+  </script>
+
 </body>
 </html>
