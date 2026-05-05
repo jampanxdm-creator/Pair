@@ -1,4 +1,4 @@
-const API = "https://draxen-ai.herokuapp.com"; // BADILISHA na link yako halisi
+const API = "https://jampan-34a6cf14afff.herokuapp.com/"; // BADILISHA na link yako halisi
 
 // Pair function
 async function pair() {
