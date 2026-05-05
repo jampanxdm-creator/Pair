@@ -1,0 +1,27 @@
+body {
+  background: #0f172a;
+  color: white;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.container {
+  margin-top: 100px;
+}
+
+input {
+  padding: 10px;
+  border-radius: 10px;
+}
+
+button {
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+#otp {
+  margin-top: 20px;
+  font-size: 20px;
+  color: lime;
+}
