@@ -8,191 +8,132 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #3b82f6;
-            --accent: #00f2ff;
-            --glass: rgba(255, 255, 255, 0.05);
-            --border: rgba(255, 255, 255, 0.1);
-        }
+        :root { --accent: #00f2ff; --glass: rgba(255, 255, 255, 0.05); }
+        body { font-family: 'Poppins', sans-serif; background: #000; color: white; min-height: 100vh; overflow-x: hidden; }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: radial-gradient(circle at center, #1e293b, #0f172a, #000);
-            min-height: 100vh;
-            color: white;
-            padding: 2rem 1rem;
-            overflow-x: hidden;
-        }
-
-        /* SIDEBAR AD TRAP */
+        /* SWIPEABLE SIDEBAR AD */
         #sidebar-ad {
-            position: fixed;
-            bottom: 20px;
-            right: -400px; /* Anzia nje ya screen */
-            width: 280px;
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid var(--accent);
-            border-radius: 1.5rem;
-            padding: 20px;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            transition: right 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            position: fixed; bottom: 25px; right: 20px; width: 280px;
+            background: rgba(15, 23, 42, 0.98); border: 1px solid var(--accent);
+            border-radius: 1.5rem; padding: 20px; z-index: 9999;
+            backdrop-filter: blur(15px); transition: transform 0.3s ease, right 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+            cursor: grab; touch-action: none; user-select: none;
+            box-shadow: 0 15px 40px rgba(0, 242, 255, 0.15);
+            display: none; /* Hide initially */
         }
+        #sidebar-ad.active { display: block; animation: slideIn 0.6s forwards; }
+        
+        @keyframes slideIn { from { transform: translateX(120%); } to { transform: translateX(0); } }
 
-        #sidebar-ad.active { right: 20px; }
+        .swipe-handle { width: 40px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: -10px auto 10px; }
 
-        .trap-x {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 12px;
-            color: #334155;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        /* Shake Animation */
-        @keyframes shake {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(3deg); }
-            75% { transform: rotate(-3deg); }
-        }
-        .shake { animation: shake 0.5s infinite; }
-
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 2.5rem;
-            transition: all 0.3s ease;
-        }
-
+        /* Dashboard UI */
+        .glass-card { background: var(--glass); border: 1px solid rgba(255,255,255,0.1); border-radius: 2.5rem; transition: 0.3s; }
         .bounce-anim { animation: bounce 2.5s infinite ease-in-out; }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
     </style>
 </head>
-<body>
+<body class="p-6">
 
-    <!-- 🎯 SIDEBAR AD TRAP (Mtego wa Pembeni) -->
-    <div id="sidebar-ad">
-        <span class="trap-x" onclick="openYouTubeApp()">✕</span>
+    <!-- 🎯 SWIPEABLE SIDEBAR AD (Mtego wa Swipe) -->
+    <div id="sidebar-ad" onmousedown="startSwipe(event)" ontouchstart="startSwipe(event)">
+        <div class="swipe-handle"></div>
         <div class="text-center">
-            <div class="shake mb-3">
-                <i class="fa-brands fa-youtube text-5xl text-red-600"></i>
-            </div>
-            <h3 class="text-xs font-black uppercase tracking-tighter mb-1 text-white">New Update Available!</h3>
-            <p class="text-[9px] text-gray-400 mb-4">Subscribe ili kuzuia matangazo na kupata server mpya.</p>
-            <button onclick="openYouTubeApp()" class="w-full py-3 bg-red-600 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-red-600/20">
-                SUBSCRIBE
-            </button>
+            <div class="mb-3"><i class="fa-brands fa-youtube text-5xl text-red-600"></i></div>
+            <h3 class="text-[11px] font-black uppercase tracking-widest text-white">Join Community</h3>
+            <p class="text-[9px] text-gray-500 mb-4 font-bold">Swipe right to dismiss or click below</p>
+            <button onclick="openYT()" class="w-full py-3 bg-red-600 rounded-xl font-black text-[10px] tracking-widest">SUBSCRIBE</button>
         </div>
     </div>
 
-    <!-- Background Accents -->
-    <div class="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/10 blur-[120px] -z-10"></div>
-
+    <!-- Header -->
     <div class="max-w-6xl mx-auto">
-        <!-- Header -->
         <div class="text-center mb-12">
             <div class="w-16 h-16 bg-blue-600/20 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-blue-500/30">
                 <span class="text-2xl font-black italic text-blue-400">JX</span>
             </div>
-            <h1 class="text-4xl font-extrabold tracking-tighter italic uppercase">JAMPAN <span class="text-cyan-400">HUB</span></h1>
-            <p class="text-[9px] text-gray-500 uppercase tracking-[5px] mt-2 font-bold">Select Your Deployment Server</p>
+            <h1 class="text-3xl font-black italic uppercase tracking-tighter">JAMPAN <span class="text-cyan-400">HUB</span></h1>
+            <p class="text-[9px] text-gray-600 uppercase tracking-[4px] mt-2 font-bold">Select Active Server</p>
         </div>
 
         <!-- Servers Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            
-            <!-- SERVER 01 -->
             <div class="glass-card p-8 text-center flex flex-col justify-between hover:border-cyan-400">
-                <div>
-                    <div class="flex justify-between items-center mb-6">
-                        <span class="text-[9px] font-bold text-cyan-400 border border-cyan-400/30 px-3 py-1 rounded-full uppercase">Server 01</span>
-                        <span class="text-[8px] text-green-500 font-bold uppercase animate-pulse">● Online</span>
-                    </div>
-                    <i class="fa-solid fa-bolt-lightning text-3xl text-blue-400 mb-4"></i>
-                    <h2 class="text-xl font-bold mb-1 italic uppercase">JAMPAN XMD</h2>
-                    <p class="text-[9px] text-gray-500 uppercase tracking-widest mb-8">High Speed Connection</p>
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-[9px] font-bold text-cyan-400 px-3 py-1 rounded-full border border-cyan-400/20 uppercase">Server 01</span>
+                    <span class="text-[8px] text-green-500 font-bold animate-pulse">● Online</span>
                 </div>
-                <a href="https://jampan-9bcf670ac9fa.herokuapp.com/" target="_blank" class="py-4 rounded-2xl bg-blue-600 font-bold text-white uppercase text-[10px] tracking-widest hover:scale-105 transition-all">
-                    Link Device
-                </a>
+                <i class="fa-solid fa-bolt text-3xl text-blue-400 mb-4"></i>
+                <h2 class="text-lg font-bold italic mb-8 italic">JAMPAN XMD V1</h2>
+                <a href="https://jampan-9bcf670ac9fa.herokuapp.com/" target="_blank" class="py-4 rounded-2xl bg-blue-600 font-bold text-white uppercase text-[9px] tracking-widest">Link Device</a>
             </div>
 
-            <!-- SERVER 02-05 (Static placeholders for UI) -->
-            <div class="glass-card p-8 text-center opacity-60">
-                <i class="fa-solid fa-server text-3xl text-gray-600 mb-4 mt-8"></i>
-                <h2 class="text-lg font-bold text-gray-700 italic">OFFLINE</h2>
-                <p class="text-[8px] text-gray-800 uppercase mt-12 font-black">Maintenance</p>
+            <!-- More Offline Cards -->
+            <div class="glass-card p-8 text-center opacity-40"><i class="fa-solid fa-server text-3xl text-gray-700 mb-4 mt-8"></i><p class="text-[8px] font-bold text-gray-700 uppercase">Offline</p></div>
+            <div class="glass-card p-8 text-center opacity-40"><i class="fa-solid fa-cloud text-3xl text-gray-700 mb-4 mt-8"></i><p class="text-[8px] font-bold text-gray-700 uppercase">Offline</p></div>
+            
+            <!-- SERVER 06 BOUNCE -->
+            <div class="glass-card p-8 border-dashed border-cyan-400/20 flex flex-col items-center justify-center bounce-anim">
+                <i class="fa-solid fa-rocket text-cyan-400 text-xl mb-2"></i>
+                <h3 class="font-black text-[9px] uppercase tracking-widest text-cyan-400">Soon</h3>
             </div>
-            <div class="glass-card p-8 text-center opacity-60">
-                <i class="fa-solid fa-shield text-3xl text-gray-600 mb-4 mt-8"></i>
-                <h2 class="text-lg font-bold text-gray-700 italic">OFFLINE</h2>
-                <p class="text-[8px] text-gray-800 uppercase mt-12 font-black">Maintenance</p>
-            </div>
-            <div class="glass-card p-8 text-center opacity-60">
-                <i class="fa-solid fa-cloud text-3xl text-gray-600 mb-4 mt-8"></i>
-                <h2 class="text-lg font-bold text-gray-700 italic">OFFLINE</h2>
-                <p class="text-[8px] text-gray-800 uppercase mt-12 font-black">Maintenance</p>
-            </div>
-            <div class="glass-card p-8 text-center opacity-60">
-                <i class="fa-solid fa-microchip text-3xl text-gray-600 mb-4 mt-8"></i>
-                <h2 class="text-lg font-bold text-gray-700 italic">OFFLINE</h2>
-                <p class="text-[8px] text-gray-800 uppercase mt-12 font-black">Maintenance</p>
-            </div>
-
-            <!-- SERVER 06 (COMING SOON BOUNCE) -->
-            <div class="glass-card p-8 border-dashed border-cyan-400/20 flex flex-col items-center justify-center text-center bounce-anim">
-                <div class="bg-cyan-500/10 p-3 rounded-full mb-3 text-cyan-400">
-                    <i class="fa-solid fa-rocket"></i>
-                </div>
-                <h3 class="font-black text-xs uppercase tracking-[3px] text-cyan-400">Coming Soon</h3>
-            </div>
-
         </div>
 
         <!-- FOOTER -->
-        <div class="mt-20 pt-10 border-t border-white/5 text-center">
-            <a href="https://jampan47.vercel.app/" target="_blank" class="inline-flex items-center gap-4 bg-white/5 px-8 py-3 rounded-full border border-white/10 hover:border-cyan-400 transition-all">
-                <img src="https://files.catbox.moe/rdsuei.png" class="w-10 h-10 rounded-full border-2 border-cyan-400">
-                <div class="text-left">
-                    <p class="text-[10px] font-black text-white uppercase tracking-widest">by kelvin jampan</p>
-                    <p class="text-[8px] text-gray-500 font-mono">https://jampan47.vercel.app/</p>
-                </div>
+        <div class="mt-20 text-center pb-10">
+            <a href="https://jampan47.vercel.app/" target="_blank" class="inline-flex items-center gap-3 bg-white/5 px-6 py-2 rounded-full border border-white/10 hover:border-cyan-400 transition-all">
+                <img src="https://files.catbox.moe/rdsuei.png" class="w-8 h-8 rounded-full border border-cyan-400">
+                <span class="text-[9px] font-black text-white uppercase tracking-[2px]">by kelvin jampan</span>
             </a>
-
-            <!-- Coding Icons -->
-            <div class="mt-10 flex justify-center gap-8 text-gray-800 text-lg">
-                <i class="fa-solid fa-code"></i>
-                <i class="fa-solid fa-terminal"></i>
-                <i class="fa-solid fa-database"></i>
+            <div class="mt-8 flex justify-center gap-6 text-gray-800 text-lg">
+                <i class="fa-solid fa-code"></i><i class="fa-solid fa-terminal"></i><i class="fa-solid fa-database"></i>
             </div>
-            
-            <p class="mt-8 text-[7px] text-gray-800 font-bold uppercase tracking-[10px]">JAMPAN TECH &copy; 2026</p>
         </div>
     </div>
 
     <script>
-        const YT_URL = "intent://www.youtube.com/@jampani-xmd/#Intent;package=com.google.android.youtube;scheme=https;end";
+        const YT_APP = "intent://www.youtube.com/@jampani-xmd/#Intent;package=com.google.android.youtube;scheme=https;end";
+        let startX, currentTranslate = 0, isSwiping = false;
+        const ad = document.getElementById('sidebar-ad');
 
-        // Onyesha sidebar ad baada ya sekunde 5
-        setTimeout(() => {
-            document.getElementById('sidebar-ad').classList.add('active');
-        }, 5000);
+        function openYT() { window.location.href = YT_APP; }
 
-        function openYouTubeApp() {
-            window.location.href = YT_URL;
+        // Logic ya Swipe
+        function startSwipe(e) {
+            isSwiping = true;
+            startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+            ad.style.transition = 'none';
         }
 
-        // Kila baada ya sekunde 30, kama aliifunga (kwa mtego), irudishe
-        setInterval(() => {
-            document.getElementById('sidebar-ad').classList.add('active');
-        }, 30000);
+        window.onmousemove = window.ontouchmove = (e) => {
+            if (!isSwiping) return;
+            const x = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+            const walk = x - startX;
+            if (walk > 0) { // Swipe kulia tu
+                currentTranslate = walk;
+                ad.style.transform = `translateX(${walk}px)`;
+                ad.style.opacity = 1 - (walk / 300);
+            }
+        };
+
+        window.onmouseup = window.ontouchend = () => {
+            if (!isSwiping) return;
+            isSwiping = false;
+            ad.style.transition = 'transform 0.3s ease, opacity 0.3s';
+            if (currentTranslate > 120) { // Kama imesogea mbali, itoe
+                ad.style.transform = `translateX(150%)`;
+                setTimeout(() => { ad.classList.remove('active'); }, 300);
+            } else { // Rudisha nafasi ya mwanzo
+                ad.style.transform = `translateX(0)`;
+                ad.style.opacity = 1;
+            }
+            currentTranslate = 0;
+        };
+
+        // Ionyeshe baada ya sekunde 4
+        setTimeout(() => ad.classList.add('active'), 4000);
+        // Iirudishe kila sekunde 45
+        setInterval(() => ad.classList.add('active'), 45000);
     </script>
 </body>
 </html>
