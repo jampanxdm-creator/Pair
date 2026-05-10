@@ -3,7 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JAMPAN XMD | Pair Dashboard 
+    <title>JAMPAN XMD | Pair Dashboard</title>
+    
+    <!-- PREVIEW IMAGE TAGS -->
+    <meta property="og:title" content="JAMPAN XMD | Pair Dashboard">
+    <meta property="og:description" content="Deploy and manage your bots with high performance.">
+    <meta property="og:image" content="https://files.catbox.moe/a380aw.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://files.catbox.moe/a380aw.png">
+    <link rel="icon" type="image/png" href="https://files.catbox.moe/a380aw.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -206,11 +216,10 @@
             document.getElementById('user-country').innerText = d.country_name;
         });
 
-        // 📡 STATUS CHECKER (WEKA LINK ZAKO HAPA!)
+        // 📡 STATUS CHECKER
         async function checkStatus(url, elementId) {
             const dot = document.getElementById(elementId);
             try {
-                // Tunatumia no-cors ili kuruhusu kukagua heroku/render links
                 await fetch(url, { mode: 'no-cors' });
                 dot.className = "status-dot online";
             } catch (e) {
@@ -218,7 +227,6 @@
             }
         }
 
-        // --- WEKA LINK ZAKO ZA SERVERS HAPA ---
         const nodes = [
             { url: "https://jampan-9bcf670ac9fa.herokuapp.com/", id: "status-1" },
             { url: "https://server-2-7e236c3e7abd.herokuapp.com/", id: "status-2" },
@@ -227,7 +235,6 @@
             { url: "WEKA_LINK_YAKO_HAPA", id: "status-5" }
         ];
 
-        // Anza kukagua status kila sekunde 30 ili isile mb sana
         function runChecks() {
             nodes.forEach(node => {
                 if(node.url !== "WEKA_LINK_YAKO_HAPA") {
@@ -270,7 +277,6 @@
             }
         };
 
-        // KILA BAADA YA SEKUNDE 10 AD IRUDI
         setInterval(() => {
             if (!ad.classList.contains('active')) {
                 ad.style.transform = 'translateX(150%)';
