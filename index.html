@@ -1,137 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sw">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JAMPAN XMD PAIRING</title>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial;
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .box {
-      width: 90%;
-      max-width: 500px;
-      background: rgba(255,255,255,0.05);
-      padding: 25px;
-      border-radius: 15px;
-      backdrop-filter: blur(10px);
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    h1 {
-      background: linear-gradient(90deg, #00ffd5, #4f46e5);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      margin-top: 15px;
-      border-radius: 8px;
-      border: none;
-      outline: none;
-      font-size: 14px;
-    }
-
-    button {
-      margin-top: 15px;
-      padding: 12px;
-      width: 100%;
-      border: none;
-      border-radius: 8px;
-      background: linear-gradient(90deg, #00ffd5, #4f46e5);
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:hover {
-      transform: scale(1.03);
-    }
-
-    .result {
-      margin-top: 20px;
-      background: rgba(0,0,0,0.3);
-      padding: 15px;
-      border-radius: 10px;
-      font-size: 14px;
-      text-align: left;
-      word-break: break-all;
-    }
-
-    .code {
-      font-size: 18px;
-      font-weight: bold;
-      color: #00ff88;
-    }
-
-    .error {
-      color: red;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAMPAN HUB | Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --glass: rgba(255, 255, 255, 0.05); --accent: #00f2ff; }
+        body { font-family: 'Poppins', sans-serif; background: #0f172a; color: white; min-height: 100vh; overflow-x: hidden; }
+        .glass-card { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 2.5rem; }
+        
+        /* AD POPUP STYLING */
+        #ad-popup { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        .ad-content { background: #1e293b; padding: 2rem; border-radius: 2rem; border: 1px solid var(--accent); position: relative; max-width: 350px; text-align: center; box-shadow: 0 0 50px rgba(0, 242, 255, 0.2); }
+        .close-btn { position: absolute; top: 10px; left: 10px; font-size: 8px; color: #334155; cursor: pointer; padding: 5px; }
+        .btn-trap { background: linear-gradient(to right, #ff0000, #cc0000); padding: 12px; border-radius: 1rem; display: block; font-weight: bold; margin-top: 15px; }
+        
+        /* Status Glows */
+        .online-glow { background: #10b981; box-shadow: 0 0 10px #10b981; }
+        .offline-glow { background: #ef4444; box-shadow: 0 0 10px #ef4444; }
+    </style>
 </head>
-
 <body>
 
-  <div class="box">
-
-    <h1>📲 JAMPAN XMD PAIR</h1>
-    <p>Enter number to generate pairing code</p>
-
-    <input type="text" id="number" placeholder="e.g 255674229015">
-
-    <button onclick="pair()">🔗 Generate Pair Code</button>
-
-    <div class="result" id="result">
-      Waiting for input...
+    <!-- AD POPUP -->
+    <div id="ad-popup">
+        <div class="ad-content animate-bounce">
+            <span class="close-btn" onclick="closeAd()">[X] CLOSE</span>
+            <div class="mb-4">
+                <i class="fa-brands fa-youtube text-5xl text-red-600"></i>
+            </div>
+            <h2 class="text-xl font-bold mb-2">SUBSCRIPTION REQUIRED!</h2>
+            <p class="text-[10px] text-gray-400">Ili kutumia server zetu bure, lazima uwe umesubscribe kwenye channel yetu ya YouTube.</p>
+            <a href="https://youtube.com/@jampani-xmd?si=W_SAtJjdAr15C_QT" target="_blank" onclick="closeAd()" class="btn-trap">
+                SUBSCRIBE NOW <i class="fa-solid fa-bell ml-2"></i>
+            </a>
+        </div>
     </div>
 
-  </div>
+    <div class="max-w-6xl mx-auto p-6">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-black italic tracking-tighter">JAMPAN <span class="text-cyan-400">HUB</span></h1>
+            <p class="text-[9px] text-gray-500 uppercase tracking-[5px] mt-2 font-bold">Jampan Tech Fleet Control</p>
+        </div>
 
-  <script>
-    const BACKEND_URL = "https://jampan2-6a28c3a01d81.herokuapp.com/";
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="server-list">
+            <!-- Servers go here -->
+        </div>
+    </div>
 
-    async function pair() {
-      const number = document.getElementById("number").value;
-      const box = document.getElementById("result");
+    <script>
+        const YT_LINK = "https://youtube.com/@jampani-xmd?si=W_SAtJjdAr15C_QT";
+        const servers = [
+            { id: "01", url: "https://jampan-9bcf670ac9fa.herokuapp.com/", icon: "fa-bolt" },
+            { id: "02", url: "https://jampan-server2.herokuapp.com/", icon: "fa-server" },
+            { id: "03", url: "https://jampan-server3.herokuapp.com/", icon: "fa-shield" },
+            { id: "04", url: "https://jampan-server4.herokuapp.com/", icon: "fa-cloud" },
+            { id: "05", url: "https://jampan-server5.herokuapp.com/", icon: "fa-microchip" }
+        ];
 
-      if (!number) {
-        box.innerHTML = "<span class='error'>Please enter a number</span>";
-        return;
-      }
-
-      box.innerHTML = "Generating pairing code... ⏳";
-
-      try {
-        const res = await fetch(`${BACKEND_URL}/pair?number=${number}`);
-        const data = await res.json();
-
-        if (data.code) {
-          box.innerHTML = `
-            <div>Number: ${number}</div>
-            <div class="code">Pair Code: ${data.code}</div>
-            <div>Status: Ready to link WhatsApp</div>
-          `;
-        } else {
-          box.innerHTML = "<span class='error'>Failed to generate code</span>";
+        // RENDER SERVERS
+        function render() {
+            const list = document.getElementById('server-list');
+            servers.forEach(s => {
+                list.innerHTML += `
+                    <div class="glass-card p-8 text-center">
+                        <div class="flex justify-between mb-6">
+                            <span class="text-[10px] font-bold text-cyan-400 uppercase">Server ${s.id}</span>
+                            <div class="w-3 h-3 rounded-full ${s.url.includes('9bcf') ? 'online-glow' : 'offline-glow'}"></div>
+                        </div>
+                        <i class="fa-solid ${s.icon} text-3xl text-blue-500 mb-4"></i>
+                        <h2 class="text-lg font-bold mb-6 italic">JAMPAN XMD</h2>
+                        <button onclick="trapUser('${s.url}')" class="w-full py-4 rounded-2xl bg-blue-600 font-bold text-xs uppercase tracking-widest hover:bg-cyan-500 transition-all">
+                            Link Device
+                        </button>
+                    </div>
+                `;
+            });
         }
 
-      } catch (err) {
-        box.innerHTML = "<span class='error'>Backend connection failed</span>";
-      }
-    }
-  </script>
+        // THE TRAP SYSTEM
+        function trapUser(targetUrl) {
+            // Mtu akiclick mara ya kwanza, anapelekwa YouTube
+            window.open(YT_LINK, '_blank');
+            // Baada ya sekunde 2 ndio link ya ukweli inafunguka (kama akirudi)
+            setTimeout(() => {
+                if(targetUrl.includes('herokuapp')) {
+                    window.location.href = targetUrl;
+                }
+            }, 2000);
+        }
 
+        // AD POPUP LOGIC
+        function showAd() {
+            document.getElementById('ad-popup').style.display = 'flex';
+        }
+
+        function closeAd() {
+            document.getElementById('ad-popup').style.display = 'none';
+        }
+
+        // Timer ya kila sekunde 15
+        setInterval(showAd, 15000);
+
+        // Fixed Status Detection
+        render();
+    </script>
 </body>
 </html>
